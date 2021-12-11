@@ -1,29 +1,39 @@
+//global variables
 var queryString = document.location.search;
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
 
-//current weather elements
+//current weather data elements
 var cityTitleEl = document.querySelector("#cityTitleEl");
 var tempEl = document.querySelector("#tempEl");
 var windEl = document.querySelector("#windEl");
 var humidityEl = document.querySelector("#humidityEl");
 var uvEl = document.querySelector("#uvEl");
 var iconEl = document.querySelector("#iconEl");
+var icon = document.createElement("img");
 
-//get location
-var getLocationName = function () {
-  var queryString = document.location.search;
-  var locationName = queryString.split("=")[1];
+//search
+var input = document.querySelector("#city");
+var searchHistoryArray = [];
 
-  if (locationName) {
-    previousCitiesEl.textContent = locationName;
-    getLocationWeather(locationName);
-    //add to local storage
-  }
-};
+//prevent refresh
+var form = document.getElementById("search");
+form.addEventListener("click", function (event) {
+  getLocationWeather(input.value);
+});
 
 //take city for Current Weather API url
 var getLocationWeather = function (location) {
+  //set history to local storage
+  searchHistoryArray.push(location);
+  for (var i = 0; i < searchHistoryArray.length; i++) {
+    localStorage.setItem("city", searchHistoryArray[i]);
+  }
+  var historyEl = document.createElement("div");
+  previousCitiesEl.appendChild(historyEl);
+  historyEl.textContent = localStorage.getItem("city");
+
+  //API
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     location +
@@ -31,19 +41,17 @@ var getLocationWeather = function (location) {
   fetch(apiUrl).then(function (response) {
     response.json().then(function (data) {
       displayWeather(data);
-      console.log("original", data);
     });
   });
 };
 
 var displayWeather = function (weather) {
-  var icon = document.createElement("img");
   icon.src =
     "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
   iconEl.appendChild(icon);
   cityTitleEl.textContent = weather.name;
 
-  //take long and lat for One Call API
+  //take lon and lat for One Call API
   var lat = weather.coord.lat;
   var lon = weather.coord.lon;
   var oneCallApiUrl =
@@ -63,4 +71,3 @@ var displayWeather = function (weather) {
     });
   });
 };
-getLocationName();
