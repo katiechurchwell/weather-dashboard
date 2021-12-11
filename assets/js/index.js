@@ -10,7 +10,7 @@ var humidityEl = document.querySelector("#humidityEl");
 var uvEl = document.querySelector("#uvEl");
 var iconEl = document.querySelector("#iconEl");
 
-//get location, needs to be city comma state (only US right now)
+//get location
 var getLocationName = function () {
   var queryString = document.location.search;
   var locationName = queryString.split("=")[1];
@@ -18,35 +18,49 @@ var getLocationName = function () {
   if (locationName) {
     previousCitiesEl.textContent = locationName;
     getLocationWeather(locationName);
+    //add to local storage
   }
 };
 
-//take city and state from input and add to api url
-//error handling for state?
+//take city for Current Weather API url
 var getLocationWeather = function (location) {
-  //imperial units
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     location +
-    "&units=imperial&appid=8b56b9813dea6c61e27469e004a1b484";
-  //need the following info: temp (main.temp), wind(wind.speed), humidity(main.humidity), UV index?, icon (weather.icon)
+    "&appid=8b56b9813dea6c61e27469e004a1b484";
   fetch(apiUrl).then(function (response) {
     response.json().then(function (data) {
       displayWeather(data);
+      console.log("original", data);
     });
   });
 };
 
 var displayWeather = function (weather) {
-var icon = document.createElement('img');
-icon.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png"
-iconEl.appendChild(icon);
+  var icon = document.createElement("img");
+  icon.src =
+    "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
+  iconEl.appendChild(icon);
+  cityTitleEl.textContent = weather.name;
 
-cityTitleEl.textContent = weather.name;
-tempEl.innerHTML = "Temp: " + weather.main.temp + " &#8457;";
-windEl.innerHTML = "Wind: " + weather.wind.speed + " MPH";
-humidityEl.innerHTML = "Humidity: " + weather.main.humidity + "%";
-//need to get UV index
-console.log(weather.weather[0].icon);
-}
+  //take long and lat for One Call API
+  var lat = weather.coord.lat;
+  var lon = weather.coord.lon;
+  var oneCallApiUrl =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&units=imperial&appid=8b56b9813dea6c61e27469e004a1b484";
+
+  //fetch data from One Call API for current weather
+  fetch(oneCallApiUrl).then(function (response) {
+    response.json().then(function (weather) {
+      uvEl.innerHTML = "UV Index: " + weather.current.uvi;
+      tempEl.innerHTML = "Temp: " + weather.current.temp + " &#8457;";
+      windEl.innerHTML = "Wind: " + weather.current.wind_speed + " MPH";
+      humidityEl.innerHTML = "Humidity: " + weather.current.humidity + "%";
+    });
+  });
+};
 getLocationName();
