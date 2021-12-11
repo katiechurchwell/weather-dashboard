@@ -46,10 +46,10 @@ var getLocationWeather = function (location) {
 };
 
 var displayWeather = function (weather) {
-  icon.src =
-    "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
+  icon.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
   iconEl.appendChild(icon);
-  cityTitleEl.textContent = weather.name;
+  let today = new Date().toLocaleDateString();
+  cityTitleEl.innerHTML = weather.name + " (" + today + "):";
 
   //take lon and lat for One Call API
   var lat = weather.coord.lat;
@@ -68,6 +68,7 @@ var displayWeather = function (weather) {
       tempEl.innerHTML = "Temp: " + weather.current.temp + " &#8457;";
       windEl.innerHTML = "Wind: " + weather.current.wind_speed + " MPH";
       humidityEl.innerHTML = "Humidity: " + weather.current.humidity + "%";
+      console.log(weather);
     });
   });
 };

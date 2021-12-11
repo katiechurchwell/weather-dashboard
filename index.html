@@ -6,36 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Weather Dashboard</title>
 </head>
 
 <body>
     <header> Weather Dashboard</header>
     <main>
+        <div id="content-container">
+            <div id="search-container">
+                <div class="search-input">
+                    <h3>Search for a City:</h3>
+                    <input name="city" id="city" type="text" autofocus="true" />
+                    <button type="submit" id="search">Search</button>
+                </div>
 
-        <div class="search">
-            <h3>Search for a City:</h3>
-                <h3>City</h3>
-                <input name="city" id="city" type="text" autofocus="true"/>
-                <button type="submit" id="search">Search</button>
-        </div>
+                <div id="previous-cities">
+                    <h3>Search History:</h3>
+                </div>
+            </div>
 
-        <div id="previous-cities">
-            <h3>Search History:</h3>
-        </div>
+            <div id="weather-container">
+                <div id="current-weather">
+                    <div id="iconEl">
+                        <h3 id="cityTitleEl"></h3>
+                    </div>
+                    <div id="tempEl"></div>
+                    <div id="windEl"></div>
+                    <div id="humidityEl"></div>
+                    <div id="uvEl"></div>
+                </div>
 
-        <div id="current-weather">
-            <div id="iconEl"><h3 id="cityTitleEl"></h3></div>
-            <div id="tempEl"></div>
-            <div id ="windEl"></div>
-            <div id="humidityEl"></div>
-            <div id="uvEl"></div>
+                <div id="forecast">
+                    <h3>5-Day Forecast</h3>
+                </div>
+            </div>
         </div>
-        
-        <div id="forecast">
-            <h3>5-Day Forecast</h3>
-        </div>
-
     </main>
 
     <script src="./assets/js/index.js"></script>
