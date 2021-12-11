@@ -1,6 +1,18 @@
-//event listener to form submit
-//var state = 
-//var city =
+var queryString = document.location.search;
+var currentWeatherEl = document.querySelector('#current-weather');
+
+//get location
+var getLocationName = function() {
+    var queryString = document.location.search;
+    var locationName = queryString.split("=")[1];
+    
+    if (locationName) {
+        currentWeatherEl.textContent = locationName;
+        getLocationWeather(locationName); //not defined yet
+      } else {
+        document.location.replace("./index.html");
+      }
+}
 
 //take city and state from input and add to api url
 //error handling for state?
@@ -8,3 +20,5 @@
 
 
 //make fetch request to url
+
+getLocationName();
