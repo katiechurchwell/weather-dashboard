@@ -1,0 +1,13 @@
+:root {
+  --primary: #2e2e3a;
+  --secondary: #668f80;
+  --tertiary: #f2efc7;
+  --quarternary: #83bcff;
+}
+
+body {
+  background-color: var(--primary);
+  color: var(--quarternary);
+  font-family: Arial, Helvetica, sans-serif;
+
+}
