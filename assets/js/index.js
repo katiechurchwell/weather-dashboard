@@ -2,6 +2,7 @@
 var queryString = document.location.search;
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
+var forecastEl = document.querySelector("#forecast");
 
 //current weather data elements
 var cityTitleEl = document.querySelector("#cityTitleEl");
@@ -77,6 +78,35 @@ var displayWeather = function (weather) {
         uvEl.setAttribute("class", "moderate");
       } else {
         uvEl.setAttribute("class", "severe");
+      }
+
+      // five day forecast: need date, icon, temp, wind and humidity
+      var forecastArray = weather.daily;
+
+      for (var i = 0; i < 5; i++) {
+        //cards
+        var cardContainer = document.createElement("div");
+        forecastEl.appendChild(cardContainer);
+
+        //temp
+        var tempContainer = document.createElement("div");
+        cardContainer.appendChild(tempContainer);
+        var dailyTemp = forecastArray[i].temp.day;
+        tempContainer.innerHTML = "Temp: " + dailyTemp + " &#8457;";
+
+        //wind
+        var windContainer = document.createElement("div");
+        cardContainer.appendChild(windContainer);
+        var dailyWind = forecastArray[i].wind_speed;
+        windContainer.innerHTML = "Wind: " + dailyWind + "MPH";
+
+        //humidity
+        var humidityContainer = document.createElement("div");
+        cardContainer.appendChild(humidityContainer);
+        var dailyHumidity = forecastArray[i].humidity;
+        humidityContainer.innerHTML = "Humidity: " + dailyHumidity;
+
+        console.log(forecastArray[i]);
       }
     });
   });

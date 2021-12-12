@@ -27,6 +27,7 @@ header {
   padding: 10px;
   margin: 5px;
   border-radius: 25px;
+  width: 250px;
 }
 
 #weather-container {
@@ -43,16 +44,15 @@ padding: 10px;
 }
 
 button {
-  background-color: var(--primary);
   border: none;
-  color: black;
+  text-decoration: none;
+  width: 150px;
+  margin: 5px;
+  font-size: 16px;
   padding: 5px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 5px;
-  width: 150px;
+  color: black;
+  background-color: var(--primary);
 }
 
 input {
@@ -63,12 +63,18 @@ input {
 
 .low {
   background-color: green;
+  color: lightgreen;
+  width: fit-content;
 }
 
 .moderate {
   background-color: yellow;
+  color: orange;
+  width: fit-content;
 }
 
 .severe {
-  background-color: red;
+  background-color: darkred;
+  color:red;
+  width: fit-content;
 }
