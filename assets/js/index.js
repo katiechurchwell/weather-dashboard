@@ -86,6 +86,7 @@ var displayWeather = function (weather) {
       for (var i = 0; i < 5; i++) {
         //cards
         var cardContainer = document.createElement("div");
+        cardContainer.setAttribute("class", "forecast");
         forecastEl.appendChild(cardContainer);
 
         //temp

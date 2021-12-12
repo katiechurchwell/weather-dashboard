@@ -78,3 +78,12 @@ input {
   color:red;
   width: fit-content;
 }
+
+#forecast {
+  display: inline-flex;
+  padding-top: 30px;
+}
+
+.forecast {
+  padding: 10px;
+}
