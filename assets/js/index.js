@@ -29,9 +29,9 @@ var getLocationWeather = function (location) {
   for (var i = 0; i < searchHistoryArray.length; i++) {
     localStorage.setItem("city", searchHistoryArray[i]);
   }
-  var historyEl = document.createElement("div");
-  previousCitiesEl.appendChild(historyEl);
-  historyEl.textContent = localStorage.getItem("city");
+  var searchHistoryBtn = document.createElement("button");
+  previousCitiesEl.appendChild(searchHistoryBtn);
+  searchHistoryBtn.textContent = localStorage.getItem("city");
 
   //API
   var apiUrl =
@@ -46,7 +46,8 @@ var getLocationWeather = function (location) {
 };
 
 var displayWeather = function (weather) {
-  icon.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
+  icon.src =
+    "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
   iconEl.appendChild(icon);
   let today = new Date().toLocaleDateString();
   cityTitleEl.innerHTML = weather.name + " (" + today + "):";
@@ -68,12 +69,11 @@ var displayWeather = function (weather) {
       tempEl.innerHTML = "Temp: " + weather.current.temp + " &#8457;";
       windEl.innerHTML = "Wind: " + weather.current.wind_speed + " MPH";
       humidityEl.innerHTML = "Humidity: " + weather.current.humidity + "%";
-      
+
       //UV index scale
       if (weather.current.uvi < 3) {
         uvEl.setAttribute("class", "low");
-      }
-      else if (weather.current.uvi < 6 ) {
+      } else if (weather.current.uvi < 6) {
         uvEl.setAttribute("class", "moderate");
       } else {
         uvEl.setAttribute("class", "severe");
