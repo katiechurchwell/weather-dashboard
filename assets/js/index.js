@@ -1,3 +1,4 @@
+//containers
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
 var forecastEl = document.querySelector("#forecast");
@@ -11,7 +12,7 @@ var uvEl = document.querySelector("#uvEl");
 var iconEl = document.querySelector("#iconEl");
 var icon = document.createElement("img");
 
-//search
+//search history
 var input = document.querySelector("#city");
 var searchHistoryArray = [];
 
@@ -29,9 +30,14 @@ var getLocationWeather = function (location) {
   for (var i = 0; i < searchHistoryArray.length; i++) {
     localStorage.setItem("city", searchHistoryArray[i]);
   }
+  //search history buttons
   var searchHistoryBtn = document.createElement("button");
   previousCitiesEl.appendChild(searchHistoryBtn);
   searchHistoryBtn.textContent = localStorage.getItem("city");
+  searchHistoryBtn.addEventListener("click", function () {
+    forecastEl.innerHTML = "";
+    getLocationWeather(searchHistoryBtn.textContent);
+  });
 
   //API
   var apiUrl =
