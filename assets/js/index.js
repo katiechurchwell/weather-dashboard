@@ -12,7 +12,6 @@ var humidityEl = document.querySelector("#humidityEl");
 var uvEl = document.querySelector("#uvEl");
 var iconEl = document.querySelector("#iconEl");
 var icon = document.createElement("img");
-var forecastIcon = document.createElement("img");
 
 //search
 var input = document.querySelector("#city");
@@ -113,6 +112,7 @@ var displayWeather = function (weather) {
         //icon (not working)
         var iconContainer = document.createElement("div");
         cardContainer.appendChild(iconContainer);
+        var forecastIcon = document.createElement("img");
         iconContainer.appendChild(forecastIcon);
         forecastIcon.src =
           "http://openweathermap.org/img/wn/" +
