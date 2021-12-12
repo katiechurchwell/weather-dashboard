@@ -12,6 +12,7 @@ var humidityEl = document.querySelector("#humidityEl");
 var uvEl = document.querySelector("#uvEl");
 var iconEl = document.querySelector("#iconEl");
 var icon = document.createElement("img");
+var forecastIcon = document.createElement("img");
 
 //search
 var input = document.querySelector("#city");
@@ -83,19 +84,18 @@ var displayWeather = function (weather) {
         uvEl.setAttribute("class", "severe");
       }
 
-      // five day forecast: need date, icon
+      // five day forecast: need icon
       var forecastArray = weather.daily;
 
       for (var i = 0; i < 5; i++) {
-        //dates
+        //get future dates
         Date.prototype.addDays = function (days) {
           var date = new Date(this.valueOf());
           date.setDate(date.getDate() + days);
           return date;
         };
-        
         var date = new Date();
-        var dateAddition = date.addDays(i+1)
+        var dateAddition = date.addDays(i + 1);
         var dateFormat = dateAddition.toLocaleDateString();
 
         //cards
@@ -109,6 +109,15 @@ var displayWeather = function (weather) {
         cardContainer.appendChild(tempContainer);
         var dailyTemp = forecastArray[i].temp.day;
         tempContainer.innerHTML = "Temp: " + dailyTemp + " &#8457;";
+
+        //icon (not working)
+        var iconContainer = document.createElement("div");
+        cardContainer.appendChild(iconContainer);
+        iconContainer.appendChild(forecastIcon);
+        forecastIcon.src =
+          "http://openweathermap.org/img/wn/" +
+          forecastArray[i].weather[0].icon +
+          "@2x.png";
 
         //wind
         var windContainer = document.createElement("div");
