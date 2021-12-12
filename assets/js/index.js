@@ -3,7 +3,6 @@ var queryString = document.location.search;
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
 var forecastEl = document.querySelector("#forecast");
-let today = new Date().toLocaleDateString();
 
 //current weather data elements
 var cityTitleEl = document.querySelector("#cityTitleEl");
@@ -48,6 +47,10 @@ var getLocationWeather = function (location) {
 };
 
 var displayWeather = function (weather) {
+  //today
+  let today = new Date().toLocaleDateString();
+
+  //icon
   icon.src =
     "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
   iconEl.appendChild(icon);
@@ -84,10 +87,22 @@ var displayWeather = function (weather) {
       var forecastArray = weather.daily;
 
       for (var i = 0; i < 5; i++) {
+        //dates
+        Date.prototype.addDays = function (days) {
+          var date = new Date(this.valueOf());
+          date.setDate(date.getDate() + days);
+          return date;
+        };
+        
+        var date = new Date();
+        var dateAddition = date.addDays(i+1)
+        var dateFormat = dateAddition.toLocaleDateString();
+
         //cards
         var cardContainer = document.createElement("div");
         cardContainer.setAttribute("class", "forecast");
         forecastEl.appendChild(cardContainer);
+        cardContainer.innerHTML = dateFormat;
 
         //temp
         var tempContainer = document.createElement("div");
@@ -106,8 +121,6 @@ var displayWeather = function (weather) {
         cardContainer.appendChild(humidityContainer);
         var dailyHumidity = forecastArray[i].humidity;
         humidityContainer.innerHTML = "Humidity: " + dailyHumidity + "%";
-
-        console.log(forecastArray[i]);
       }
     });
   });
