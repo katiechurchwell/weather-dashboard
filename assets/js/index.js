@@ -68,7 +68,16 @@ var displayWeather = function (weather) {
       tempEl.innerHTML = "Temp: " + weather.current.temp + " &#8457;";
       windEl.innerHTML = "Wind: " + weather.current.wind_speed + " MPH";
       humidityEl.innerHTML = "Humidity: " + weather.current.humidity + "%";
-      console.log(weather);
+      
+      //UV index scale
+      if (weather.current.uvi < 3) {
+        uvEl.setAttribute("class", "low");
+      }
+      else if (weather.current.uvi < 6 ) {
+        uvEl.setAttribute("class", "moderate");
+      } else {
+        uvEl.setAttribute("class", "severe");
+      }
     });
   });
 };

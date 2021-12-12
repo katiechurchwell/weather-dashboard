@@ -60,3 +60,15 @@ input {
   margin: 5px;
   height: 30px;
 }
+
+.low {
+  background-color: green;
+}
+
+.moderate {
+  background-color: yellow;
+}
+
+.severe {
+  background-color: red;
+}
