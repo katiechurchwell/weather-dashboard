@@ -13,18 +13,19 @@ var iconEl = document.querySelector("#iconEl");
 var icon = document.createElement("img");
 
 //search history
-var input = document.querySelector("#city");
 var searchHistoryArray = [];
 
 //submit city
-var form = document.getElementById("search");
-form.addEventListener("click", function () {
+var input = document.querySelector("#city");
+var searchButton = document.querySelector("#search");
+searchButton.addEventListener("click", function () {
   forecastEl.innerHTML = "";
   getLocationWeather(input.value);
+  createHistory(input.value);
 });
 
-//take city for Current Weather API url
-var getLocationWeather = function (location) {
+//create search history
+var createHistory = function (location) {
   //set history to local storage
   searchHistoryArray.push(location);
   for (var i = 0; i < searchHistoryArray.length; i++) {
@@ -34,11 +35,15 @@ var getLocationWeather = function (location) {
   var searchHistoryBtn = document.createElement("button");
   previousCitiesEl.appendChild(searchHistoryBtn);
   searchHistoryBtn.textContent = localStorage.getItem("city");
-  searchHistoryBtn.addEventListener("click", function () {
+  searchHistoryBtn.setAttribute("class", "search");
+  searchHistoryBtn.addEventListener("click", function(event) {
     forecastEl.innerHTML = "";
-    getLocationWeather(searchHistoryBtn.textContent);
-  });
+    getLocationWeather(event.target.textContent);
+  })
+};
 
+//take city for Current Weather API url
+var getLocationWeather = function (location) {
   //API
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
