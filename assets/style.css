@@ -90,3 +90,7 @@ input {
   background-color: lightblue;
   border-radius: 25px;
 }
+
+#forecast-title {
+  display: block;
+}

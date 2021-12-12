@@ -1,5 +1,3 @@
-//global variables
-var queryString = document.location.search;
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
 var forecastEl = document.querySelector("#forecast");
@@ -17,9 +15,10 @@ var icon = document.createElement("img");
 var input = document.querySelector("#city");
 var searchHistoryArray = [];
 
-//prevent refresh
+//submit city
 var form = document.getElementById("search");
-form.addEventListener("click", function (event) {
+form.addEventListener("click", function () {
+  forecastEl.innerHTML = "";
   getLocationWeather(input.value);
 });
 
@@ -83,8 +82,14 @@ var displayWeather = function (weather) {
         uvEl.setAttribute("class", "severe");
       }
 
-      // five day forecast: need icon
+      //five day forecast
       var forecastArray = weather.daily;
+
+      // //title
+      // var titleContainer = document.createElement("div");
+      // forecastEl.appendChild(titleContainer);
+      // titleContainer.setAttribute("id", "forecast-title");
+      // titleContainer.innerHTML = "<h2>Five Day Forecast:</h2>";
 
       for (var i = 0; i < 5; i++) {
         //get future dates
@@ -109,7 +114,7 @@ var displayWeather = function (weather) {
         var dailyTemp = forecastArray[i].temp.day;
         tempContainer.innerHTML = "Temp: " + dailyTemp + " &#8457;";
 
-        //icon (not working)
+        //icon
         var iconContainer = document.createElement("div");
         cardContainer.appendChild(iconContainer);
         var forecastIcon = document.createElement("img");
