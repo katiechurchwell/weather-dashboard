@@ -3,6 +3,7 @@ var queryString = document.location.search;
 var currentWeatherEl = document.querySelector("#current-weather");
 var previousCitiesEl = document.querySelector("#previous-cities");
 var forecastEl = document.querySelector("#forecast");
+let today = new Date().toLocaleDateString();
 
 //current weather data elements
 var cityTitleEl = document.querySelector("#cityTitleEl");
@@ -50,7 +51,6 @@ var displayWeather = function (weather) {
   icon.src =
     "http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png";
   iconEl.appendChild(icon);
-  let today = new Date().toLocaleDateString();
   cityTitleEl.innerHTML = weather.name + " (" + today + "):";
 
   //take lon and lat for One Call API
@@ -80,7 +80,7 @@ var displayWeather = function (weather) {
         uvEl.setAttribute("class", "severe");
       }
 
-      // five day forecast: need date, icon, temp, wind and humidity
+      // five day forecast: need date, icon
       var forecastArray = weather.daily;
 
       for (var i = 0; i < 5; i++) {
@@ -99,13 +99,13 @@ var displayWeather = function (weather) {
         var windContainer = document.createElement("div");
         cardContainer.appendChild(windContainer);
         var dailyWind = forecastArray[i].wind_speed;
-        windContainer.innerHTML = "Wind: " + dailyWind + "MPH";
+        windContainer.innerHTML = "Wind: " + dailyWind + " MPH";
 
         //humidity
         var humidityContainer = document.createElement("div");
         cardContainer.appendChild(humidityContainer);
         var dailyHumidity = forecastArray[i].humidity;
-        humidityContainer.innerHTML = "Humidity: " + dailyHumidity;
+        humidityContainer.innerHTML = "Humidity: " + dailyHumidity + "%";
 
         console.log(forecastArray[i]);
       }
