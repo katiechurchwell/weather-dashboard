@@ -21,25 +21,16 @@ var searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
   if (input.value) {
     forecastEl.innerHTML = "";
+    localStorage.setItem(keyCounter, input.value);
     getLocationWeather(input.value);
-    createHistory(input.value);
   } else {
     alert("Invalid entry");
   }
 });
 
 //create search history
-var createHistory = function (city) {
-  localStorage.setItem(keyCounter, city);
-  newBtn = document.createElement("button");
-  previousCitiesEl.appendChild(newBtn);
-  newBtn.textContent = city;
-  generateList;
-};
-
-var generateList = function() {
-  previousCitiesEl.innerHTML = "";
-  for (var i = 1; i <= localStorage.length; i++) {
+for (var i = 0; i < 6; i++) {
+  if (localStorage[i] != null) {
     var searchHistoryBtn = document.createElement("button");
     previousCitiesEl.appendChild(searchHistoryBtn);
     searchHistoryBtn.textContent = localStorage[i];
@@ -49,11 +40,9 @@ var generateList = function() {
     });
   }
 }
-window.onload = generateList;
 
 //take city for Current Weather API url
 var getLocationWeather = function (location) {
-  keyCounter++;
   //API
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -67,6 +56,7 @@ var getLocationWeather = function (location) {
 };
 
 var displayWeather = function (weather) {
+  keyCounter++;
   //today
   let today = new Date().toLocaleDateString();
 
