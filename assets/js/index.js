@@ -13,37 +13,47 @@ var iconEl = document.querySelector("#iconEl");
 var icon = document.createElement("img");
 
 //search history
-var searchHistoryArray = [];
+var keyCounter = localStorage.length;
 
 //submit city
 var input = document.querySelector("#city");
 var searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
-  forecastEl.innerHTML = "";
-  getLocationWeather(input.value);
-  createHistory(input.value);
+  if (input.value) {
+    forecastEl.innerHTML = "";
+    getLocationWeather(input.value);
+    createHistory(input.value);
+  } else {
+    alert("Invalid entry");
+  }
 });
 
 //create search history
-var createHistory = function (location) {
-  //set history to local storage
-  searchHistoryArray.push(location);
-  for (var i = 0; i < searchHistoryArray.length; i++) {
-    localStorage.setItem("city", searchHistoryArray[i]);
-  }
-  //search history buttons
-  var searchHistoryBtn = document.createElement("button");
-  previousCitiesEl.appendChild(searchHistoryBtn);
-  searchHistoryBtn.textContent = localStorage.getItem("city");
-  searchHistoryBtn.setAttribute("class", "search");
-  searchHistoryBtn.addEventListener("click", function(event) {
-    forecastEl.innerHTML = "";
-    getLocationWeather(event.target.textContent);
-  })
+var createHistory = function (city) {
+  localStorage.setItem(keyCounter, city);
+  newBtn = document.createElement("button");
+  previousCitiesEl.appendChild(newBtn);
+  newBtn.textContent = city;
+  generateList;
 };
+
+var generateList = function() {
+  previousCitiesEl.innerHTML = "";
+  for (var i = 1; i <= localStorage.length; i++) {
+    var searchHistoryBtn = document.createElement("button");
+    previousCitiesEl.appendChild(searchHistoryBtn);
+    searchHistoryBtn.textContent = localStorage[i];
+    searchHistoryBtn.addEventListener("click", function (event) {
+      forecastEl.innerHTML = "";
+      getLocationWeather(event.target.textContent);
+    });
+  }
+}
+window.onload = generateList;
 
 //take city for Current Weather API url
 var getLocationWeather = function (location) {
+  keyCounter++;
   //API
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -95,12 +105,6 @@ var displayWeather = function (weather) {
 
       //five day forecast
       var forecastArray = weather.daily;
-
-      // //title
-      // var titleContainer = document.createElement("div");
-      // forecastEl.appendChild(titleContainer);
-      // titleContainer.setAttribute("id", "forecast-title");
-      // titleContainer.innerHTML = "<h2>Five Day Forecast:</h2>";
 
       for (var i = 0; i < 5; i++) {
         //get future dates
