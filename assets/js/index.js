@@ -36,7 +36,7 @@ var searchHistory = function (city) {
   if (city != null) {
     historyArray.push(city);
     for (var i = 0; i < historyArray.length; i++) {
-      localStorage.setItem([i], historyArray[i]);
+      localStorage.setItem(localStorage.length+1, historyArray[i]);
     }
   }
 

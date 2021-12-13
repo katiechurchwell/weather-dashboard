@@ -94,3 +94,8 @@ input {
 #forecast-title {
   display: block;
 }
+
+#previous-cities {
+  display: flex;
+  flex-direction: column-reverse;
+}
