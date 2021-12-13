@@ -14,6 +14,7 @@ var icon = document.createElement("img");
 
 //search history
 var keyCounter = localStorage.length;
+var historyArray = [];
 
 //submit city
 var input = document.querySelector("#city");
@@ -21,25 +22,36 @@ var searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
   if (input.value) {
     forecastEl.innerHTML = "";
-    localStorage.setItem(keyCounter, input.value);
     getLocationWeather(input.value);
+    searchHistory(input.value);
   } else {
     alert("Invalid entry");
   }
 });
 
 //create search history
-for (var i = 0; i < 6; i++) {
-  if (localStorage[i] != null) {
-    var searchHistoryBtn = document.createElement("button");
-    previousCitiesEl.appendChild(searchHistoryBtn);
-    searchHistoryBtn.textContent = localStorage[i];
-    searchHistoryBtn.addEventListener("click", function (event) {
-      forecastEl.innerHTML = "";
-      getLocationWeather(event.target.textContent);
-    });
+var searchHistory = function (city) {
+  previousCitiesEl.innerHTML = "";
+
+  if (city != null) {
+    historyArray.push(city);
+    for (var i = 0; i < historyArray.length; i++) {
+      localStorage.setItem([i], historyArray[i]);
+    }
   }
-}
+
+  for (var i = 0; i < 5; i++) {
+    if (localStorage[localStorage.length-[i]] != null) {
+      var searchHistoryBtn = document.createElement("button");
+      previousCitiesEl.prepend(searchHistoryBtn);
+      searchHistoryBtn.textContent = localStorage[localStorage.length-[i]];
+      searchHistoryBtn.addEventListener("click", function (event) {
+        forecastEl.innerHTML = "";
+        getLocationWeather(event.target.textContent);
+      });
+    }
+  }
+};
 
 //take city for Current Weather API url
 var getLocationWeather = function (location) {
@@ -144,3 +156,5 @@ var displayWeather = function (weather) {
     });
   });
 };
+
+document.onload = searchHistory();
