@@ -1,4 +1,4 @@
-# Weather Dashboards
+# Weather Dashboard
   [![project-languages-used](https://img.shields.io/github/languages/count/katiechurchwell/weather-dashboard?color=important)](https://github.com/katiechurchwell/weather-dashboard)
   [![project-top-language](https://img.shields.io/github/languages/top/katiechurchwell/weather-dashboard?color=blueviolet)](https://github.com/katiechurchwell/weather-dashboard)
 
